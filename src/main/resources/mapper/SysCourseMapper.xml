@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aiye.springboot.mapper.SysCourseMapper">
+    <update id="delStudentCourse">
+        delete from student_course where student_id =#{studentId} and course_id =#{courseId}
+    </update>
+
+    <insert id="insStudentCourse">
+        insert into student_course(student_id,course_id) values(#{studentId},#{courseId})
+    </insert>
+
+    <select id="findPage" resultType="com.aiye.springboot.entity.SysCourse">
+        select c.*,u.nickname as teacher  from sys_course c
+        left join sys_user u
+        on c.teacher_id = u.id
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
